@@ -121,51 +121,6 @@ extension SearchViewController: UISearchBarDelegate {
         })
         tableView.reloadData()
         searchBar.resignFirstResponder()
-//        if !searchBar.text!.isEmpty {
-//            
-//            searchBar.resignFirstResponder()
-//            
-//            isLoading = true
-//            dataTask?.cancel()
-//            tableView.reloadData()
-//            
-//            hasSearched = true
-//            searchResults = [SearchResult]()
-//            
-//            let url = urlWithSearchText(searchBar.text!, category: segmentedControl.selectedSegmentIndex)
-//            let session = NSURLSession.sharedSession()
-//            dataTask = session.dataTaskWithURL(url, completionHandler: {
-//                data, response, error in
-//                
-//                if let error = error where error.code == -999{
-//                    return
-//                } else if let httpResponse = response as? NSHTTPURLResponse where httpResponse.statusCode == 200 {
-//                    
-//                    if let data = data, dictionary = self.parseJSON(data) {
-//                        self.searchResults = self.parseDictionary(dictionary)
-//                        self.searchResults.sortInPlace(<)
-//                        
-//                        dispatch_async(dispatch_get_main_queue()) {
-//                            self.isLoading = false
-//                            self.tableView.reloadData()
-//                        }
-//                        return
-//                    }
-//                    
-//                } else {
-//                    print("Failure1 \(response!)")
-//                }
-//                
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.hasSearched = false
-//                    self.isLoading = false
-//                    self.tableView.reloadData()
-//                    self.showNetworkError()
-//                }
-//                
-//            })
-//            dataTask?.resume()
-//        }
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
