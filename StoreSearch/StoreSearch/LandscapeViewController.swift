@@ -49,12 +49,18 @@ class LandscapeViewController: UIViewController {
     
     
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        scrollView.frame = view.bounds
-        pageControl.frame = CGRect( x: 0, y: view.frame.size.height - pageControl.frame.size.height, width: view.frame.size.width, height: pageControl.frame.size.height)
         if firstTime {
             firstTime = false
-            tileButtons(search.searchResults)
+        switch search.state {
+            case .NotSearchedYet:
+                break
+            case .Loading:
+                break
+            case .NoResults:
+                break
+            case .Results(let list):
+                tileButtons(list)
+            }
         }
     }
     
