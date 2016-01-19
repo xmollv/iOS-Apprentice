@@ -97,7 +97,8 @@ class LandscapeViewController: UIViewController {
                 tileButtons(list)
         }
     }
-    private func hideSpinner() { view.viewWithTag(1000)?.removeFromSuperview()
+    private func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
     }
     
     private func tileButtons(searchResults: [SearchResult]) {
@@ -137,7 +138,7 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for searchResult in searchResults {
+        for (index,searchResult) in searchResults.enumerate() {
             let button = UIButton(type: .Custom)
             button.setBackgroundImage(UIImage(named: "LandscapeButton"), forState: .Normal)
             button.frame = CGRect(x: x + paddingHorz, y: marginY + CGFloat(row)*itemHeight + paddingVert, width: buttonWidth, height: buttonHeight)
@@ -152,6 +153,9 @@ class LandscapeViewController: UIViewController {
                     column = 0; x += marginX * 2
                 }
             }
+            
+            button.tag = 2000 + index
+            button.addTarget(self, action: Selector("buttonPressed:"), forControlEvents: .TouchUpInside)
         }
         
         let buttonsPerPage = columnsPerPage * rowsPerPage
@@ -160,6 +164,19 @@ class LandscapeViewController: UIViewController {
         print("Number of pages: \(numPages)")
         pageControl.numberOfPages = numPages
         pageControl.currentPage = 0
+    }
+    
+    func buttonPressed(sender: UIButton) {
+        performSegueWithIdentifier("ShowDetail", sender: sender)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowDetail" {
+            if case .Results(let list) = search.state {
+                let detailViewController = segue.destinationViewController as! DetailViewController
+                let searchResult = list[sender!.tag - 2000]
+                detailViewController.searchResult = searchResult }
+        }
     }
     
     private func downloadImageForSearchResult(searchResult: SearchResult, andPlaceOnButton button: UIButton) {
