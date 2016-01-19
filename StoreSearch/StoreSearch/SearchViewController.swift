@@ -124,6 +124,7 @@ extension SearchViewController: UISearchBarDelegate {
             })
             tableView.reloadData()
             searchBar.resignFirstResponder()
+            self.landscapeViewController?.searchResultsReceived()
         }
     }
     
